@@ -1,11 +1,21 @@
 <?php include 'includes/header.php'; ?>
+<?php
+$id = $_GET['id'];
+
+//Cereate Database object
+$db = new Database();
+
+//Create Query
+$query = "SELECT * FROM posts WHERE id =".$id;
+//Run Query
+$post = $db->select($query)->fetch_assoc();
+
+$query = "SELECT * FROM categories";
+$categories = $db->select($query);
+?>
     <div class="blog-post">
-        <h2 class="blog-post-title">International php Conference 2017</h2>
-        <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-
-        <p>Nulla id tempor metus. Aliquam est purus, rhoncus quis venenatis in, pharetra vitae nulla. Cras laoreet purus lacus, at faucibus nisi rhoncus eget. Curabitur mollis, lacus sed lobortis scelerisque, est odio bibendum turpis, sed posuere neque justo rutrum urna. Curabitur sagittis, tortor vel congue volutpat, justo justo maximus tortor, quis sollicitudin tellus ligula a ex. Integer non urna eu elit aliquet venenatis. Sed vestibulum ullamcorper libero eget vulputate. Etiam porta porttitor dui. Suspendisse pulvinar ante felis, ut dapibus nisi gravida sagittis. Cras in ligula gravida, cursus risus sit amet, malesuada nulla. Aliquam id pulvinar dolor. In viverra massa vitae quam gravida, et porta massa accumsan. Curabitur ultricies urna nec augue rhoncus commodo. Etiam et dignissim metus. Praesent vehicula aliquam ex vitae pharetra.</p>
-        <p>Nulla id tempor metus. Aliquam est purus, rhoncus quis venenatis in, pharetra vitae nulla. Cras laoreet purus lacus, at faucibus nisi rhoncus eget. Curabitur mollis, lacus sed lobortis scelerisque, est odio bibendum turpis, sed posuere neque justo rutrum urna. Curabitur sagittis, tortor vel congue volutpat, justo justo maximus tortor, quis sollicitudin tellus ligula a ex. Integer non urna eu elit aliquet venenatis. Sed vestibulum ullamcorper libero eget vulputate. Etiam porta porttitor dui. Suspendisse pulvinar ante felis, ut dapibus nisi gravida sagittis. Cras in ligula gravida, cursus risus sit amet, malesuada nulla. Aliquam id pulvinar dolor. In viverra massa vitae quam gravida, et porta massa accumsan. Curabitur ultricies urna nec augue rhoncus commodo. Etiam et dignissim metus. Praesent vehicula aliquam ex vitae pharetra.</p>
-        <p>Nulla id tempor metus. Aliquam est purus, rhoncus quis venenatis in, pharetra vitae nulla. Cras laoreet purus lacus, at faucibus nisi rhoncus eget. Curabitur mollis, lacus sed lobortis scelerisque, est odio bibendum turpis, sed posuere neque justo rutrum urna. Curabitur sagittis, tortor vel congue volutpat, justo justo maximus tortor, quis sollicitudin tellus ligula a ex. Integer non urna eu elit aliquet venenatis. Sed vestibulum ullamcorper libero eget vulputate. Etiam porta porttitor dui. Suspendisse pulvinar ante felis, ut dapibus nisi gravida sagittis. Cras in ligula gravida, cursus risus sit amet, malesuada nulla. Aliquam id pulvinar dolor. In viverra massa vitae quam gravida, et porta massa accumsan. Curabitur ultricies urna nec augue rhoncus commodo. Etiam et dignissim metus. Praesent vehicula aliquam ex vitae pharetra.</p>
-
+        <h2 class="blog-post-title"><?php echo $post['title'];?></h2>
+        <p class="blog-post-meta"><?php echo formatDate($post['date']);?> by <a href="#"><?php echo $post['author'];?></a></p>
+        <?php echo $post['body']; ?>
     </div><!-- /.blog-post -->
 <?php include 'includes/footer.php'; ?>

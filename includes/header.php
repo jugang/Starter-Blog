@@ -1,3 +1,6 @@
+<?php include 'config/config.php' ?>
+<?php include 'libraries/Database.php' ?>
+<?php include 'helpers/format_helper.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +18,7 @@
     <div class="container">
         <nav class="blog-nav">
             <a class="blog-nav-item active" href="index.php">Home</a>
-            <a class="blog-nav-item" href="post.php">All post</a>
+            <a class="blog-nav-item" href="posts.php">All post</a>
         </nav>
     </div>
 </div>
@@ -23,7 +26,7 @@
 <div class="container">
 
     <div class="blog-header">
-        <div class="logo"><img src="images/logo.png" alt="logo"></div>
+        <div class="logo"><a href="index.php"><img src="images/logo.png" alt="logo"></a></div>
         <h1 class="blog-title">PHP Lovers Blog</h1>
         <p class="lead blog-description">PHP News, tutorials, videos & more</p>
     </div>

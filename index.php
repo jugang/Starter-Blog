@@ -1,22 +1,27 @@
-<?php include 'config/config.php' ?>
-<?php include 'libraries/Database.php' ?>
 <?php include 'includes/header.php'; ?>
 <?php
-    $db = new Database();
+$db = new Database();
+
+//Create Query
+$query = "SELECT * FROM posts
+          ORDER BY id DESC ";
+//Run Query
+$posts = $db->select($query);
+
+$query = "SELECT * FROM categories";
+$categories = $db->select($query);
 ?>
-            <div class="blog-post">
-                <h2 class="blog-post-title">Sample blog post</h2>
-                <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+<?php if ($posts) : ?>
+    <?php while ($row = $posts->fetch_assoc()) : ?>
+        <div class="blog-post">
+            <h2 class="blog-post-title"><?php echo $row['title'];?></h2>
+            <p class="blog-post-meta"><?php echo formatDate($row['date']);?> by <a href="#"><?php echo $row['author'];?></a></p>
+            <?php echo shortenText($row['body']); ?>
+            <a class="readmore" href="post.php?id=<?php echo urlencode($row['id']); ?>">Read more</a>
+        </div><!-- /.blog-post -->
+    <?php endwhile; ?>
 
-                <p>Nulla id tempor metus. Aliquam est purus, rhoncus quis venenatis in, pharetra vitae nulla. Cras laoreet purus lacus, at faucibus nisi rhoncus eget. Curabitur mollis, lacus sed lobortis scelerisque, est odio bibendum turpis, sed posuere neque justo rutrum urna. Curabitur sagittis, tortor vel congue volutpat, justo justo maximus tortor, quis sollicitudin tellus ligula a ex. Integer non urna eu elit aliquet venenatis. Sed vestibulum ullamcorper libero eget vulputate. Etiam porta porttitor dui. Suspendisse pulvinar ante felis, ut dapibus nisi gravida sagittis. Cras in ligula gravida, cursus risus sit amet, malesuada nulla. Aliquam id pulvinar dolor. In viverra massa vitae quam gravida, et porta massa accumsan. Curabitur ultricies urna nec augue rhoncus commodo. Etiam et dignissim metus. Praesent vehicula aliquam ex vitae pharetra.</p>
-                <a class="readmore" href="post.php?id=1">Read more</a>
-            </div><!-- /.blog-post -->
-
-            <div class="blog-post">
-                <h2 class="blog-post-title">Another blog post</h2>
-                <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
-
-                <p>Nulla id tempor metus. Aliquam est purus, rhoncus quis venenatis in, pharetra vitae nulla. Cras laoreet purus lacus, at faucibus nisi rhoncus eget. Curabitur mollis, lacus sed lobortis scelerisque, est odio bibendum turpis, sed posuere neque justo rutrum urna. Curabitur sagittis, tortor vel congue volutpat, justo justo maximus tortor, quis sollicitudin tellus ligula a ex. Integer non urna eu elit aliquet venenatis. Sed vestibulum ullamcorper libero eget vulputate. Etiam porta porttitor dui. Suspendisse pulvinar ante felis, ut dapibus nisi gravida sagittis. Cras in ligula gravida, cursus risus sit amet, malesuada nulla. Aliquam id pulvinar dolor. In viverra massa vitae quam gravida, et porta massa accumsan. Curabitur ultricies urna nec augue rhoncus commodo. Etiam et dignissim metus. Praesent vehicula aliquam ex vitae pharetra.</p>
-                <a class="readmore" href="post.php?id=1">Read more</a>
-            </div><!-- /.blog-post -->
+<?php else : ?>
+    <p>There are no posts yet</p>
+<?php endif; ?>
 <?php include 'includes/footer.php'; ?>

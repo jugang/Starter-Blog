@@ -5,7 +5,7 @@ class  Database{
     public $password = DB_PASS;
     Public $db_name = DB_NAME;
 
-    public $link;
+    public $link; //Konekcija sa bazom podataka preko konstruktora
     public $error;
 
     public function __construct(){
@@ -19,6 +19,62 @@ class  Database{
         if (!$this->link) {
             $this->error = "Connection Failed: " . $this->link->connect_error;
             return false;
+        }
+    }
+    /*
+     * Select
+     */
+    public function select($query){
+        $result = $this->link->query($query) or die($this->link->error.__LINE__);
+
+        if ($result->num_rows > 0){
+            return $result;
+        }else{
+            return false;
+        }
+    }
+    /*
+     * Insert
+     */
+    public function insert($query){
+        $insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
+
+        //Validate insert
+        if ($insert_row){
+            header("Location: index.php?msg=" .urlencode('Record Added'));
+            exit();
+        }else{
+            die('Error: ('.$this->link->errno. ')'. $this->link->error);
+        }
+    }
+
+    /*
+     * Update
+     */
+    public function update($query){
+        $update_row = $this->link->query($query) or die($this->link->error.__LINE__);
+
+        //Validate update
+        if ($update_row){
+            header("Location: index.php?msg=" .urlencode('Record Updated'));
+            exit();
+        }else{
+            die('Error: ('.$this->link->errno. ')'. $this->link->error);
+        }
+    }
+
+    /*
+     * Delete
+     */
+    public function delete($query){
+        $delete_row = $this->link->query($query) or die($this->link->error.__LINE__);
+
+        //Validate Delete
+        if ($delete_row){
+            header("Location: index.php?msg=" .urlencode('Record Deleted'));
+            exit();
+        }else{
+            die('Error: ('.$this->link->errno. ')'. $this->link->error);
         }
     }
 
